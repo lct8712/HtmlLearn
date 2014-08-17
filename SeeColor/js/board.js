@@ -2,6 +2,8 @@ function Board (rectNumber, boardLength, container) {
     this.rectNumber = rectNumber;
     this.boardLength = boardLength;
     this.container = container;
+    this.successCallback = function () {};
+    this.failedCallback = function () {};
 
     this.generate();
 }
