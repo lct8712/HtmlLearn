@@ -23,8 +23,16 @@ var yHistory;
 
 var currentRadiusLength;
 
+function resize() {
+    stage.canvas.width = window.innerWidth;
+    stage.canvas.height = window.innerHeight;
+    restartButton.x = stage.canvas.width - 110;
+    stage.update();
+}
+
 function init() {
     stage = new createjs.Stage('canvas-stage');
+    createjs.Touch.enable(stage);
 
     scoreLabel = new createjs.Text('', '18px Arial');
     scoreLabel.x = scoreLabel.y = 0;
@@ -48,18 +56,22 @@ function init() {
     stage.addEventListener('stagemousedown', onStageMouseDown);
     stage.addEventListener('stagemouseup', onStageMouseUp);
     stage.addEventListener('stagemousemove', onStageMouseMove);
+
+    resize();
+    window.addEventListener('resize', resize, false);
+    window.addEventListener('orientationchange', resize, false);
 }
 
 function run() {
     gameState = GameState.Ready;
     xHistory = [];
     yHistory = [];
-    currentRadiusLength = Math.random() * stage.canvas.width / 4 + 30;
+    currentRadiusLength = Math.random() * stage.canvas.width / 4 + 40;
     stage.removeChild(circleShape);
     stage.removeChild(mouseShape);
     stage.removeChild(radiusShape);
 
-    scoreLabel.text = 'Press mouse and draw a circle';
+    scoreLabel.text = 'Draw the circle';
 
     circleShape = new createjs.Shape();
     circleShape.x = stage.canvas.width / 2;
